@@ -6,11 +6,11 @@ namespace E_Commerce.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IAuthService _authService;
+        private readonly IUserRepository _authService;
 
-        public AuthController(IAuthService authService)
+        public UserController(IUserRepository authService)
         {
             _authService = authService;
         }
@@ -22,6 +22,19 @@ namespace E_Commerce.Controllers
                 return BadRequest(ModelState);
 
             var result = await _authService.RegisterAsync(model);
+
+            if (!result.IsAuthenticated)
+                return BadRequest(result.Message);
+
+            return Ok(result);
+        }
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn([FromBody] SignInModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.GetTokenAsync(model);
 
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);

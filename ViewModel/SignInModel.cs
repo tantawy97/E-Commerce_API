@@ -2,7 +2,7 @@
 
 namespace TestApiJWT.Models
 {
-    public class TokenRequestModel
+    public class SignInModel
     {
         [Required]
         public string Email { get; set; }

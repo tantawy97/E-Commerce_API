@@ -1,9 +1,11 @@
 using E_Commerce.Models;
+using E_Commerce.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TestApiJWT.Helpers;
 using TestApiJWT.Services;
 //using TestApiJWT.Helpers;
 //using TestApiJWT.Services;
@@ -21,7 +23,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ECommerceContext>(options =>
            options.UseSqlServer(builder.Configuration.GetConnectionString("LocalCs")));
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddIdentity<User, IdentityRole>(o => o.Password = new PasswordOptions
 {
     RequireDigit = true,
@@ -31,7 +34,7 @@ builder.Services.AddIdentity<User, IdentityRole>(o => o.Password = new PasswordO
     RequireNonAlphanumeric = false
 }).AddEntityFrameworkStores<ECommerceContext>(); 
 builder.Services.AddCors();
-//builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
+builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
