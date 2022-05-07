@@ -70,7 +70,7 @@ namespace TestApiJWT.Services
             };
         }
 
-        public async Task<AuthModel> GetTokenAsync(SignInModel model)
+        public async Task<AuthModel> SignIn(SignInModel model)
         {
             var authModel = new AuthModel();
 

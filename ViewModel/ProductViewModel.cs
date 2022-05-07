@@ -1,23 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using E_Commerce.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace E_Commerce.Models
+namespace E_Commerce.ViewModel
 {
-    public class Product
+    public class ProductViewModel
     {
         public int Id { get; set; }
         [Required, MaxLength(50)]
         public string Name { get; set; }
-        
-        public byte[]? Image { get; set; }
+
+        public IFormFile? Image { get; set; }
+        public string Img { get; set; }
         [Required]
         public double Price { get; set; }
         [Required]
         public double Quantity { get; set; }
-        [ForeignKey("Category")]
+       
         public int Categoryid { get; set; }
-        public Category? Category { get; set; }
-
-        
+        public Category Category { get; set; }
     }
 }

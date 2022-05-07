@@ -25,6 +25,7 @@ builder.Services.AddDbContext<ECommerceContext>(options =>
            options.UseSqlServer(builder.Configuration.GetConnectionString("LocalCs")));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddIdentity<User, IdentityRole>(o => o.Password = new PasswordOptions
 {
     RequireDigit = true,
@@ -63,6 +64,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseStaticFiles();
 app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseAuthentication();
 app.UseAuthorization();

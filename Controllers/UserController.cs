@@ -34,7 +34,7 @@ namespace E_Commerce.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _authService.GetTokenAsync(model);
+            var result = await _authService.SignIn(model);
 
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);
